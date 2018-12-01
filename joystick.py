@@ -47,5 +47,7 @@ if __name__=="__main__":
         evs = ps.get_events()
         if (len(evs)!=0):
             for be in evs:
+                if be.val==5 and not be.down: #exit if R1 is hit
+                    exit()
                 print(be)
 
