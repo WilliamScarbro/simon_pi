@@ -11,3 +11,4 @@ joystick.py:</br>
 ------val --int, button number (0 - square, 1 - 'X', 2 - 'O', 3 - triangle)</br>
 ------__init__(down,val) -- initializes values</br>
 ------__str__() --helpful print for debugging (equivalent to toString)</br>
+--__main__() --simple demonstration of how to use the inerface, prints button contents, exits on R1</br>
