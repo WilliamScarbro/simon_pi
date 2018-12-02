@@ -26,5 +26,5 @@ led.h:</br>
 ------Image BLANK() //all pixels off</br>
 ----Led_Writer:</br>
 ------Led_Writer() //starts the interface</br>
-------void write(const Image&, const Image&) //writes to Images to each of the screens (there are two 8x8 screens)</br>
+------void write(const Image&, const Image&) //writes two Images, one to each of the two 8x8 screens. </br>
 ------void write(int valL, int valR) //writes predefined images (-2 = FULL, -1 = BLANK, 0=square, 1=cross,2=circle,3=triangle) (these match the button values for the controller, you're welcome)</br>
