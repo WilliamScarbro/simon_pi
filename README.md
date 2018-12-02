@@ -17,14 +17,14 @@ led.h:</br>
 --provides interface to the led display</br>
 --classes:</br>
 ----Image:</br>
-------Image(unsigned char* val) //creates a writable image for the 8x8 led screen, val contains 8 chars representing each line, each char looks like ('0x' + two hex chars), see led.cc for examples
-------Image CROSS() //predefined CROSS image
-------Image SQUARE() //predefined SQUARE image
-------Image CIRCLE() // ''    ''
-------Image TRIANGLE() //  ''   ''
-------Image FULL()  //all pixels on
-------Image BLANK() //all pixels off
+------Image(unsigned char* val) //creates a writable image for the 8x8 led screen, val contains 8 chars representing each line, each char looks like ('0x' + two hex chars), see led.cc for examples</br>
+------Image CROSS() //predefined CROSS image</br>
+------Image SQUARE() //predefined SQUARE image</br>
+------Image CIRCLE() // ''    ''</br>
+------Image TRIANGLE() //  ''   ''</br>
+------Image FULL()  //all pixels on</br>
+------Image BLANK() //all pixels off</br>
 ----Led_Writer:</br>
-------Led_Writer() //starts the interface
-------void write(const Image&, const Image&) //writes to Images to each of the screens (there are two 8x8 screens)
-------void write(int valL, int valR) //writes predefined images (-2 = FULL, -1 = BLANK, 0=square, 1=cross,2=circle,3=triangle) (these match the button values for the controller, you're welcome)
+------Led_Writer() //starts the interface</br>
+------void write(const Image&, const Image&) //writes to Images to each of the screens (there are two 8x8 screens)</br>
+------void write(int valL, int valR) //writes predefined images (-2 = FULL, -1 = BLANK, 0=square, 1=cross,2=circle,3=triangle) (these match the button values for the controller, you're welcome)</br>
