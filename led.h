@@ -17,6 +17,8 @@ class Image {
 		static Image TRIANGLE();
 		static Image FULL();
 		static Image BLANK();
+		static Image WRONG();
+		static Image CORRECT();
 };
 class Led_Writer{
   public:
