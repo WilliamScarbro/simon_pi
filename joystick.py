@@ -37,7 +37,7 @@ class Joystick_Listener:
     #clears ButtonEvent buffer
     #(not necessary because events get flushed out of buffer really fast)
     def clear_events(self):
-        pygame.event.get();
+        pygame.event.get()
 
 if __name__=="__main__":
     ps=Joystick_Listener()
