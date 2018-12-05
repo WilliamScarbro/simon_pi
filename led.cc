@@ -47,6 +47,19 @@ uchar circle[8]   = {0x00,0x18,0x24,0x42,0x42,0x24,0x18,0x00};
 uchar triangle[8] = {0x00,0x08,0x14,0x22,0x22,0x41,0x7F,0x00};
 uchar low[8]      = {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
 uchar high[8]     = {0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF};
+uchar wrong[8]    = {0x7E,0xBD,0xDB,0xE7,0xE7,0xDB,0xBD,0x7E};
+uchar correct[8]  = {0x00,0x01,0x02,0x04,0x88,0x50,0x40,0x00};
+
+uchar start1[8]   = {0xFF,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+uchar start2[8]   = {0xFF,0x00,0xFF,0x00,0x00,0x00,0x00,0x00};
+uchar start3[8]   = {0xFF,0x00,0xFF,0x00,0xFF,0x00,0x00,0x00};
+uchar start4[8]   = {0xFF,0x00,0xFF,0x00,0xFF,0x00,0xFF,0x00};
+uchar start5[8]   = {0xFF,0x00,0xFF,0x00,0xFF,0x00,0xFF,0xFF};
+uchar start6[8]   = {0xFF,0x00,0xFF,0x00,0xFF,0xFF,0xFF,0xFF};
+uchar start7[8]   = {0xFF,0x00,0xFF,0x00,0xFF,0xFF,0xFF,0xFF};
+uchar start8[8]   = {0xFF,0x00,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF};
+
+
 
 Image Image::SQUARE(){ return Image(square); }
 Image Image::CROSS(){ return Image(cross); }
@@ -54,6 +67,17 @@ Image Image::CIRCLE(){ return Image(circle); }
 Image Image::TRIANGLE(){ return Image(triangle); }
 Image Image::FULL(){ return Image(high); }
 Image Image::BLANK(){ return Image(low); }
+Image Image::WRONG(){ return Image(wrong); }
+Image Image::CORRECT(){ return Image(correct); }
+
+Image Image::ONE(){ return Image(start1); }
+Image Image::TWO(){ return Image(start2); }
+Image Image::THREE(){ return Image(start3); }
+Image Image::FOUR(){ return Image(start4); }
+Image Image::FIVE(){ return Image(start5); }
+Image Image::SIX(){ return Image(start6); }
+Image Image::SEVEN(){ return Image(start7); }
+Image Image::EIGHT(){ return Image(start8); }
 
 
 
@@ -156,7 +180,7 @@ void Init_MAX7219(void)
 Led_Writer::Led_Writer(){
       uchar i , j;
       if (!bcm2835_init())
-        printf("inable to initialize");
+        printf("unable to initialize");
       bcm2835_spi_begin();
       bcm2835_spi_setBitOrder(BCM2835_SPI_BIT_ORDER_MSBFIRST);      // The default
       bcm2835_spi_setDataMode(BCM2835_SPI_MODE0);                   // The default
@@ -195,25 +219,93 @@ unsigned char* Led_Writer::getChar(int val){
           return low;
         case -2:
           return high;
+	case -3:
+	  return wrong;
+	case -4:
+	  return correct
         }
-        printf("unkown char value!!!");
+        printf("unknown char value!!!");
         return low;
     }        
 void Led_Writer::writeHelp(uchar* left, uchar* right){
         for (int i=1; i<9; i++)
                 Write_Max7219(i,left[i-1],i,right[i-1]);
-}   
-int main(void){
-        Led_Writer lw;
+} 
+
+//cute startup animation
+void LED_Writer::startup(){
+	LED_Writer lw;
+	int delay = 2000;
+	lw.write(Image::ONE(),Image::ONE());
+	Delay_xms(delay);
+	lw.write(Image::TWO(),Image::TWO());
+	Delay_xms(delay);
+	lw.write(Image::THREE(),Image::THREE());
+	Delay_xms(delay);
+	lw.write(Image::FOUR(),Image::FOUR());
+	Delay_xms(delay);
+	lw.write(Image::FIVE(),Image::FIVE());
+	Delay_xms(delay);
+	lw.write(Image::SIX(),Image::SIX());
+	Delay_xms(delay);
+	lw.write(Image::SEVEN(),Image::SEVEN());
+	Delay_xms(delay);
+	lw.write(Image::EIGHT(),Image::EIGHT());
+	Delay_xms(delay);
 	lw.write(Image::FULL(),Image::FULL());
-	Delay_xms(1000);
+	Delay_xms(delay);
+}
+
+//flashes red X
+void LED_Writer::wrong_input(){
+	LED_Writer lw;
+	int delay = 2000;
+	lw.write(Image::WRONG(),Image::WRONG());
+	Delay_xms(delay);
 	lw.write(Image::BLANK(),Image::BLANK());
-	Delay_xms(1000);
-	for (int i=0; i<10; i++){
-		lw.write(Image::TRIANGLE(),Image::CROSS());
-		Delay_xms(200);
-		lw.write(Image::SQUARE(),Image::CIRCLE());
-		Delay_xms(200);
+	Delay_xms(delay);	
+	lw.write(Image::WRONG(),Image::WRONG());
+	Delay_xms(delay);
+	lw.write(Image::BLANK(),Image::BLANK());
+	Delay_xms(delay);
+	lw.write(Image::WRONG(),Image::WRONG());
+	Delay_xms(delay);
+	lw.write(Image::BLANK(),Image::BLANK());
+	Delay_xms(delay);
+	
+}
+
+//display checkmark
+void LED_Writer::correct_input(){
+	LED_Writer lw;
+	int delay = 2000;
+	lw.write(Image::CORRECT(),Image::CORRECT());
+	Delay_xms(delay);
+	lw.write(Image::BLANK(),Image::BLANK());
+	Delay_xms(delay);	
+	
+}
+
+int main(void){
+	
+        Led_Writer lw;
+	lw.startup();
+	
+	lw.wrong_input();
+	lw.correct_input();
+		
+	
+	//lw.write(Image::FULL(),Image::FULL());
+	//Delay_xms(1000);
+	//lw.write(Image::BLANK(),Image::BLANK());
+	//Delay_xms(1000);
+	
+	
+	//for (int i=0; i<10; i++){
+		//lw.write(Image::TRIANGLE(),Image::CROSS());
+		//Delay_xms(200);
+		//lw.write(Image::SQUARE(),Image::CIRCLE());
+		//Delay_xms(200);
 	}
 	//lw.write();
 }
