@@ -7,7 +7,7 @@ class item:
     self.val = valn #0,1,2,3
     self.time = time #timestamp used for program syncing
   def __str__:
-    return "{},{}".format(self.val,self.time)
+    return "{}:{}".format(self.val,self.time)
     
 
 while true:
@@ -17,7 +17,7 @@ while true:
     if event.val == 5 or not event.down:
       exit()
     i = item(event.val, time.time())
-    f = open("userimput.txt","w")
+    f = open("userimput.csv","w")
     f.write(i)
     
     
